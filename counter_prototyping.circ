@@ -107,10 +107,10 @@
     <comp loc="(570,220)" name="up_down_counter_v2">
       <a name="appearance" val="logisim_evolution"/>
     </comp>
-    <comp loc="(570,380)" name="up_down_counter_v3">
+    <comp loc="(570,70)" name="up_down_counter_v1">
       <a name="appearance" val="logisim_evolution"/>
     </comp>
-    <comp loc="(570,70)" name="up_down_counter_v1">
+    <comp loc="(580,380)" name="up_down_counter_v3">
       <a name="appearance" val="logisim_evolution"/>
     </comp>
     <wire from="(200,200)" to="(350,200)"/>
@@ -120,7 +120,7 @@
     <wire from="(220,270)" to="(230,270)"/>
     <wire from="(220,300)" to="(350,300)"/>
     <wire from="(220,370)" to="(230,370)"/>
-    <wire from="(220,400)" to="(350,400)"/>
+    <wire from="(220,400)" to="(360,400)"/>
     <wire from="(220,430)" to="(230,430)"/>
     <wire from="(220,90)" to="(350,90)"/>
     <wire from="(230,230)" to="(230,240)"/>
@@ -128,16 +128,16 @@
     <wire from="(230,260)" to="(230,270)"/>
     <wire from="(230,260)" to="(350,260)"/>
     <wire from="(230,370)" to="(230,380)"/>
-    <wire from="(230,380)" to="(350,380)"/>
+    <wire from="(230,380)" to="(360,380)"/>
     <wire from="(230,420)" to="(230,430)"/>
-    <wire from="(230,420)" to="(350,420)"/>
+    <wire from="(230,420)" to="(360,420)"/>
     <wire from="(350,110)" to="(350,120)"/>
     <wire from="(350,200)" to="(350,220)"/>
     <wire from="(350,280)" to="(350,300)"/>
     <wire from="(350,60)" to="(350,70)"/>
     <wire from="(570,220)" to="(630,220)"/>
-    <wire from="(570,380)" to="(640,380)"/>
     <wire from="(570,70)" to="(620,70)"/>
+    <wire from="(580,380)" to="(640,380)"/>
   </circuit>
   <vhdl name="up_down_counter_v3">library ieee;
 use ieee.std_logic_1164.all;
@@ -159,14 +159,15 @@ begin
             count &lt;= (others =&gt; '0');
         elsif rising_edge(up_clk) or falling_edge(up_clk) then 
             count &lt;= count + 1;
-            count_out &lt;= std_logic_vector(count);
+            --count_out &lt;= std_logic_vector(count);
         elsif rising_edge(down_clk) or falling_edge(down_clk) then
             count &lt;= count - 1;
-            count_out &lt;= std_logic_vector(count);
+            --count_out &lt;= std_logic_vector(count);
         end if;
         
     end process;
 
+    count_out &lt;= std_logic_vector(count);
     
 end architecture;
 </vhdl>
