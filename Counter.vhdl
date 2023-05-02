@@ -4,47 +4,34 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
-entity click_counter is
-    Port ( clk : in  STD_LOGIC;
+entity click_counter_v2 is
+    Port ( new_data : in  STD_LOGIC;
            increment : in  STD_LOGIC;
            decrement : in  STD_LOGIC;
            reset : in STD_LOGIC;
            count : out  STD_LOGIC_VECTOR(13 downto 0));
-end click_counter;
+end click_counter_v2;
 
-architecture Behavioral of click_counter is
+architecture Behavioral of click_counter_v2 is
     signal internal_count : INTEGER := 0;
     signal count_vector : STD_LOGIC_VECTOR(13 downto 0);
-    type state_type is (IDLE, LEFT_CLICK, RIGHT_CLICK);
-    signal state : state_type := IDLE;
+    signal X,Y: STD_LOGIC:='0';
 begin
-    process (clk)
+    process (new_data)
     begin
-        if rising_edge(clk) then
-            case state is
-                when IDLE =>
-                    if reset = '1' then
-                        internal_count <= 0;
-                    elsif increment = '1' then
-                        if internal_count < 9999 then
-                            internal_count <= internal_count + 1;
-                        end if;
-                        state <= LEFT_CLICK;
-                    elsif decrement = '1' then
-                        if internal_count > 0 then
-                            internal_count <= internal_count - 1;
-                        end if;
-                        state <= RIGHT_CLICK;
-                    end if;
-                when LEFT_CLICK =>
-                    if increment = '0' then
-                        state <= IDLE;
-                    end if;
-                when RIGHT_CLICK =>
-                    if decrement = '0' then
-                        state <= IDLE;
-                    end if;
-            end case;
+        if reset = '1' then
+        	  internal_count<=0;	
+            X <= '0';
+            Y <= '0';
+        elsif falling_edge(new_data) then    
+            if increment = '1' and X = '0' and internal_count < 9999 then
+            	internal_count <= internal_count + 1;
+            end if;
+            if decrement = '1' and Y = '0' and internal_count > 0 then
+                internal_count <= internal_count - 1;
+            end if;
+            X <= increment;
+            Y <= decrement;
         end if;
     end process;
 
