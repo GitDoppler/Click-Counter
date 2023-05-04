@@ -1,1 +1,1 @@
-![Diagram](relative%20path/to/diagram.jpg?raw=true "Title")
+![Diagram](relative%20path/to/diagram.png?raw=true "Title")
