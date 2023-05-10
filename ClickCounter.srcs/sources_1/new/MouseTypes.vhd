@@ -27,12 +27,6 @@ package Mouse_Types is
     type Mouse_Message is record
         LeftClick:  STD_LOGIC;
         RightClick: STD_LOGIC;
-        MiddleClick:STD_LOGIC;
-        OverflowX:  STD_LOGIC;
-        OverflowY:  STD_LOGIC;
-        
-        X: STD_LOGIC_VECTOR(8 downto 0);
-        Y: STD_LOGIC_VECTOR(8 downto 0);
     end record;
     
     function ParseMouseData(signal Buf: STD_LOGIC_VECTOR(42 downto 0)) return Mouse_Message;
@@ -45,20 +39,7 @@ package body Mouse_Types is
     variable Msg: Mouse_Message;
     begin
         Msg.LeftClick   := Buf(41);
-        Msg.RightClick  := Buf(40);
-        Msg.MiddleClick := Buf(39);
-        -- Bit #3 <==> #38 is always 1
-        Msg.X(8) := Buf(37);
-        Msg.Y(8) := Buf(36);
-        Msg.OverflowX   := Buf(35);
-        Msg.OverflowY   := Buf(34);
-        -- Parity, Stop, Start
-        
-        Msg.X(7 downto 0) := Buf(30 downto 23);
-        -- Parity, Stop, Start
-        Msg.Y(7 downto 0) := Buf(19 downto 12);
-        -- Parity, Stop, Start
-        
+        Msg.RightClick  := Buf(40); 
         return Msg;
     end function;
     
